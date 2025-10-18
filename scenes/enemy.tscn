@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://bmd82veu6xh3r"]
+[gd_scene load_steps=42 format=3 uid="uid://bmd82veu6xh3r"]
 
 [ext_resource type="Texture2D" uid="uid://b6015ixcy6c3e" path="res://assets/sprites/characters/slime.png" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://ddsdkq0o5absp" path="res://scripts/enemy.gd" id="1_md0e3"]
@@ -292,6 +292,9 @@ radius = 54.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ra3w"]
 radius = 5.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
+radius = 11.0
+
 [node name="Enemy" type="CharacterBody2D"]
 y_sort_enabled = true
 script = ExtResource("1_md0e3")
@@ -313,5 +316,25 @@ shape = SubResource("CircleShape2D_x6q4o")
 position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_4ra3w")
 
+[node name="Hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_md0e3")
+
+[node name="TakeDamageCooldown" type="Timer" parent="."]
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+modulate = Color(0.39215687, 1, 0.14901961, 1)
+offset_left = -6.0
+offset_top = 2.0
+offset_right = 74.0
+offset_bottom = 29.0
+scale = Vector2(0.15, 0.15)
+show_percentage = false
+
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
+[connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
+[connection signal="timeout" from="TakeDamageCooldown" to="." method="_on_take_damage_timeout"]
