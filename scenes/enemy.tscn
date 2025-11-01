@@ -1,7 +1,9 @@
-[gd_scene load_steps=42 format=3 uid="uid://bmd82veu6xh3r"]
+[gd_scene load_steps=44 format=3 uid="uid://bmd82veu6xh3r"]
 
 [ext_resource type="Texture2D" uid="uid://b6015ixcy6c3e" path="res://assets/sprites/characters/slime.png" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://ddsdkq0o5absp" path="res://scripts/enemy.gd" id="1_md0e3"]
+[ext_resource type="Texture2D" uid="uid://c6ekeopm0cnit" path="res://assets/sprites/interface/healthbarUnder.png" id="3_5uy6h"]
+[ext_resource type="Texture2D" uid="uid://cfthkbbeqqu3m" path="res://assets/sprites/interface/healthbarProgress.png" id="4_c4w8v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_md0e3"]
 atlas = ExtResource("1_7p1mj")
@@ -290,13 +292,14 @@ animations = [{
 radius = 54.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ra3w"]
-radius = 5.0
+radius = 6.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
-radius = 11.0
+radius = 6.0
 
 [node name="Enemy" type="CharacterBody2D"]
 y_sort_enabled = true
+collision_layer = 3
 script = ExtResource("1_md0e3")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -319,22 +322,29 @@ shape = SubResource("CircleShape2D_4ra3w")
 [node name="Hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(0, -5)
+position = Vector2(0, -4)
 shape = SubResource("CircleShape2D_md0e3")
 
 [node name="TakeDamageCooldown" type="Timer" parent="."]
+wait_time = 0.432
 
-[node name="HealthBar" type="ProgressBar" parent="."]
-modulate = Color(0.39215687, 1, 0.14901961, 1)
-offset_left = -6.0
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+offset_left = -10.0
 offset_top = 2.0
-offset_right = 74.0
-offset_bottom = 29.0
-scale = Vector2(0.15, 0.15)
-show_percentage = false
+offset_right = 10.0
+offset_bottom = 9.0
+value = 100.0
+nine_patch_stretch = true
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+texture_under = ExtResource("3_5uy6h")
+texture_progress = ExtResource("4_c4w8v")
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_hitbox_area_entered"]
 [connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]
 [connection signal="body_exited" from="Hitbox" to="." method="_on_hitbox_body_exited"]
 [connection signal="timeout" from="TakeDamageCooldown" to="." method="_on_take_damage_timeout"]

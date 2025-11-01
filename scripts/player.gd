@@ -1,14 +1,24 @@
 extends CharacterBody2D
 
+signal healthChanged
+
+
 var enemy_in_attack_range = false
 var enemy_attack_cooldown = true
-var health = 160
 var player_alive = true
 
-const SPEED = 100
+const KNOCKBACK_FORCE = 200
 var current_dir = "none"
 
 var attack_ip = false
+
+var bow_equired = true
+var bow_cooldown = true
+var arrow = preload("res://scenes/arrow.tscn")
+@export var maxHealth = 100
+var currentHealth: int = 100
+var knockback_velocity = Vector2.ZERO
+
 
 func _ready() -> void:
 	$AnimatedSprite2D.play("frond_idle")
@@ -16,38 +26,55 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	player_movement(delta)
-	enemy_attack()
 	attack()
 	current_camera()
-	update_health()
 	
-	if health <= 0:
+	if knockback_velocity != Vector2.ZERO:
+		velocity = knockback_velocity
+		move_and_slide()
+		knockback_velocity = knockback_velocity.move_toward(Vector2.ZERO, delta * 1000)  # Плавное замедление
+		return
+	
+	if currentHealth <= 0:
 		player_alive = false
-		health = 0
+		currentHealth = 0
 		self.queue_free()
 	
+	var mouse_pos = get_global_mouse_position()
+	$Marker2D.look_at(mouse_pos)
+	
+	if Input.is_action_just_pressed("left_mouse") and bow_equired and bow_cooldown:
+		bow_cooldown = false
+		var arrow_instance = arrow.instantiate()
+		arrow_instance.rotation = $Marker2D.rotation
+		arrow_instance.global_position = $Marker2D.global_position
+		$"..".add_child(arrow_instance)
+		
+		await get_tree().create_timer(0.8).timeout
+		bow_cooldown = true
+		
 	
 func player_movement(delta):
 	
-	if Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("right"):
 		current_dir = "right"
 		play_anim(1)
-		velocity.x = SPEED
+		velocity.x = global.player_speed
 		velocity.y = 0
-	elif Input.is_action_pressed("ui_left"):
+	elif Input.is_action_pressed("left"):
 		current_dir = "left"
 		play_anim(1)
-		velocity.x = -SPEED
+		velocity.x = -global.player_speed
 		velocity.y = 0
-	elif Input.is_action_pressed("ui_down"):
+	elif Input.is_action_pressed("down"):
 		current_dir = "down"
 		play_anim(1)
-		velocity.y = SPEED
+		velocity.y = global.player_speed
 		velocity.x = 0
-	elif Input.is_action_pressed("ui_up"):
+	elif Input.is_action_pressed("up"):
 		current_dir = "up"
 		play_anim(1)
-		velocity.y = -SPEED
+		velocity.y = -global.player_speed
 		velocity.x = 0
 	else:
 		play_anim(0)
@@ -90,23 +117,24 @@ func play_anim(movement):
 			if attack_ip == false:
 				anim.play("back_idle")	
 
+
 func player():
 	pass
 
 
-func _on_hitbox_body_entered(body: Node2D) -> void:
-	if body.has_method("enemy"):
-		enemy_in_attack_range = true
+func apply_knockback(direction: Vector2):
+	if direction == Vector2.ZERO:
+		direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
+	
+	knockback_velocity = direction * KNOCKBACK_FORCE
 
 
-func _on_hitbox_body_exited(body: Node2D) -> void:
-	if body.has_method("enemy"):
-		enemy_in_attack_range = false
+func take_damage(damage, attack_direction: Vector2 = Vector2.ZERO):
+	if enemy_attack_cooldown == true:
+		currentHealth -= damage
+		apply_knockback(attack_direction)
 		
-func enemy_attack():
-	if enemy_in_attack_range and enemy_attack_cooldown == true:
-		health -= 20
-		print("Player health = ", health)
+		healthChanged.emit()
 		enemy_attack_cooldown = false
 		$AttackCooldown.start()
 		
@@ -151,29 +179,4 @@ func current_camera():
 	elif global.current_scene == "cliff_side":
 		$WorldCamera.enabled = false
 		$CliffsideCamera.enabled = true
-		
-		
-
-func update_health():
-	var healthbar = $HealthBar
-	healthbar.value = health
-	
-	if health >= 100:
-		healthbar.visible = false
-	else:
-		healthbar.visible = true
-	
-	
-	
-
-func _on_regen_timer_timeout():
-	if health < 100:
-		health = health + 20
-		
-		if health > 100:
-			health = 100
-	if health <= 0:
-		health = 0
-		
-		
 		

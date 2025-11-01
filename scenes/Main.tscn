@@ -333,4 +333,7 @@ polygon = PackedVector2Array(4, 0, 432, 0, 431, 44, 477, 41, 475, 163, 431, 165,
 position = Vector2(454.5, 105)
 shape = SubResource("RectangleShape2D_nxtc6")
 
+[node name="Enemy2" parent="." instance=ExtResource("5_vcsgt")]
+position = Vector2(311, 105)
+
 [connection signal="body_entered" from="CliffSideTransition" to="." method="_on_cliff_side_transition_body_entered"]

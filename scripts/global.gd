@@ -10,6 +10,10 @@ var player_exit_cliffside_pos_y = 123
 var player_start_pos_x = 135
 var player_start_pos_y = 27
 
+var coins = 0
+var speed_cost = 10
+var player_speed = 100
+
 
 var game_first_loading = true
 
