@@ -1,12 +1,12 @@
 extends Node2D
 
-func _ready() -> void:
-	if global.game_first_loading == true:
-		$Player.position.x = global.player_start_pos_x
-		$Player.position.y = global.player_start_pos_y
-	else:
-		$Player.position.x = global.player_exit_cliffside_pos_x
-		$Player.position.y = global.player_exit_cliffside_pos_y
+#func _ready() -> void:
+	#if global.game_first_loading == true:
+		#$Player.position.x = global.player_start_pos_x
+		#$Player.position.y = global.player_start_pos_y
+	#else:
+		#$Player.position.x = global.player_exit_cliffside_pos_x
+		#$Player.position.y = global.player_exit_cliffside_pos_y
 
 func _process(delta: float) -> void:
 	change_scene()

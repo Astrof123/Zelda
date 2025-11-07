@@ -3,9 +3,10 @@ extends TextureProgressBar
 var player
 
 func _ready() -> void:
-	player = $"../../.."
+	player = $"../.."
 	player.healthChanged.connect(update)
 	update()
 	
 func update():
-	value = player.currentHealth * 100 / player.maxHealth
+	value = global.player_current_health * 100 / global.player_max_health
+	max_value = global.player_max_health

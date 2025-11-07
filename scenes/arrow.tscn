@@ -1,24 +1,22 @@
 [gd_scene load_steps=4 format=3 uid="uid://dnf4sp2831ls6"]
 
 [ext_resource type="Script" uid="uid://bq355l0il5ayu" path="res://scripts/arrow.gd" id="1_23jat"]
-[ext_resource type="Texture2D" uid="uid://d3tbd0gkf24xv" path="res://assets/sprites/arrow.png" id="2_q8ifc"]
+[ext_resource type="Texture2D" uid="uid://db6i2jxdbmbna" path="res://assets/sprites/Units/Blue Units/Archer/Arrow.png" id="2_23jat"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_7ckq1"]
 radius = 16.0
-height = 96.0
+height = 55.999996
 
 [node name="Arrow" type="Area2D"]
-scale = Vector2(0.15, 0.15)
+scale = Vector2(0.8, 0.8)
 script = ExtResource("1_23jat")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-9.536743e-07, 9.536743e-07)
-rotation = 0.7853982
-scale = Vector2(0.14355469, 0.14355469)
-texture = ExtResource("2_q8ifc")
+position = Vector2(13.333336, 5.684342e-14)
+texture = ExtResource("2_23jat")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(8, 0)
+position = Vector2(10, -5.6843415e-15)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_7ckq1")
 
@@ -27,4 +25,5 @@ position = Vector2(8, 0)
 rect = Rect2(-10, -16, 10, 32)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="_on_visible_on_screen_enabler_2d_screen_exited"]

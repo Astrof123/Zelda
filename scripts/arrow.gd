@@ -1,6 +1,6 @@
 extends Area2D
 
-const SPEED = 300
+const SPEED = 500
 
 func _ready() -> void:
 	set_as_top_level(true)
@@ -18,5 +18,10 @@ func _on_visible_on_screen_enabler_2d_screen_exited() -> void:
 func _on_area_entered(area: Area2D) -> void:
 	if area.get_parent().has_method("enemy"):
 		var attack_direction = (Vector2.RIGHT).rotated(rotation)
-		area.get_parent().take_damage(15, attack_direction)
+		area.get_parent().take_damage(15 + global.current_attack_mult, attack_direction)
+		queue_free()
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if body.name == "TileMap":
 		queue_free()

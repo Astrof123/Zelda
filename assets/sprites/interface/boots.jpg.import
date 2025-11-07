@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://3qmvfo7rk8xf"
-path="res://.godot/imported/boots.jpg-1103762340b99adbf8dc253f4cbede3a.ctex"
+uid="uid://66725yofkc5n"
+path="res://.godot/imported/boots.jpg-ddbe5dcfad03a2779486d9656a6babab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/interface/boots.jpg"
-dest_files=["res://.godot/imported/boots.jpg-1103762340b99adbf8dc253f4cbede3a.ctex"]
+source_file="res://assets/sprites/Interface/boots.jpg"
+dest_files=["res://.godot/imported/boots.jpg-ddbe5dcfad03a2779486d9656a6babab.ctex"]
 
 [params]
 

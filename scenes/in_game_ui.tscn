@@ -1,11 +1,17 @@
-[gd_scene load_steps=11 format=3 uid="uid://c4oleebb6o0as"]
+[gd_scene load_steps=21 format=3 uid="uid://c4oleebb6o0as"]
 
 [ext_resource type="Script" uid="uid://d3ujvujik0610" path="res://scripts/coins_menu.gd" id="1_6qwj3"]
-[ext_resource type="Texture2D" uid="uid://kg4nsod3iuxp" path="res://assets/sprites/Sprite sheet for Basic Pack.png" id="1_kplmn"]
 [ext_resource type="FontFile" uid="uid://bcv05njgj7po6" path="res://assets/fonts/Roboto-VariableFont_wdth,wght.ttf" id="2_a45jx"]
-[ext_resource type="Texture2D" uid="uid://3qmvfo7rk8xf" path="res://assets/sprites/interface/boots.jpg" id="2_fnge6"]
+[ext_resource type="Texture2D" uid="uid://66725yofkc5n" path="res://assets/sprites/Interface/boots.jpg" id="2_fnge6"]
 [ext_resource type="Script" uid="uid://ddtn20to7ixo6" path="res://scripts/coins_container.gd" id="2_ria60"]
-[ext_resource type="Texture2D" uid="uid://b58k6r3t6b4de" path="res://assets/sprites/interface/midas.jpg" id="4_fqvwy"]
+[ext_resource type="Texture2D" uid="uid://yn1xln7fm4q0" path="res://assets/sprites/Interface/Sprite sheet for Basic Pack.png" id="2_yjjyl"]
+[ext_resource type="Texture2D" uid="uid://ca2hnj1jy3hkf" path="res://assets/sprites/Interface/midas.jpg" id="4_fqvwy"]
+[ext_resource type="Script" uid="uid://d351sqi7ox461" path="res://scripts/speed_button.gd" id="6_276nr"]
+[ext_resource type="Script" uid="uid://cph5c7jvenmwt" path="res://scripts/money_button.gd" id="8_04xgm"]
+[ext_resource type="Script" uid="uid://8imjkusolcv8" path="res://scripts/damage_button.gd" id="9_jlb72"]
+[ext_resource type="Texture2D" uid="uid://ce6edaxut2wet" path="res://assets/sprites/Interface/heal.jpg" id="9_yjjyl"]
+[ext_resource type="Script" uid="uid://chnveajpyaxv5" path="res://scripts/heal_button.gd" id="10_huati"]
+[ext_resource type="Texture2D" uid="uid://du6uqq60rytqb" path="res://assets/sprites/Interface/damage.jpg" id="11_ve7rr"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_a45jx"]
 texture = ExtResource("2_fnge6")
@@ -18,6 +24,18 @@ texture = ExtResource("4_fqvwy")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fqvwy"]
 texture = ExtResource("4_fqvwy")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_luu0w"]
+texture = ExtResource("9_yjjyl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yjjyl"]
+texture = ExtResource("9_yjjyl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gxplc"]
+texture = ExtResource("11_ve7rr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ve7rr"]
+texture = ExtResource("11_ve7rr")
 
 [node name="InGameUI" type="Control"]
 layout_mode = 3
@@ -49,9 +67,9 @@ speed_button = NodePath("NinePatchRect/MarginContainer/VBoxContainer/Speed")
 money_button = NodePath("NinePatchRect/MarginContainer/VBoxContainer/Money")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="SkillsMenu/VBoxContainer/CoinsMenu"]
-custom_minimum_size = Vector2(90, 400)
+custom_minimum_size = Vector2(80, 360)
 layout_mode = 2
-texture = ExtResource("1_kplmn")
+texture = ExtResource("2_yjjyl")
 region_rect = Rect2(741, 38, 22, 22)
 patch_margin_left = 4
 patch_margin_top = 4
@@ -82,19 +100,19 @@ script = ExtResource("2_ria60")
 [node name="CoinsTitle" type="Label" parent="SkillsMenu/VBoxContainer/CoinsMenu/NinePatchRect/MarginContainer/VBoxContainer/CoinsContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_a45jx")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 22
 text = "Coins:"
 horizontal_alignment = 1
 
 [node name="CoinsCount" type="Label" parent="SkillsMenu/VBoxContainer/CoinsMenu/NinePatchRect/MarginContainer/VBoxContainer/CoinsContainer"]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_a45jx")
-theme_override_font_sizes/font_size = 25
+theme_override_font_sizes/font_size = 22
 text = "0"
 horizontal_alignment = 1
 
 [node name="Speed" type="Button" parent="SkillsMenu/VBoxContainer/CoinsMenu/NinePatchRect/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(80, 70)
+custom_minimum_size = Vector2(70, 60)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
@@ -102,30 +120,39 @@ theme_override_font_sizes/font_size = 21
 theme_override_styles/normal = SubResource("StyleBoxTexture_a45jx")
 theme_override_styles/hover = SubResource("StyleBoxTexture_fnge6")
 text = "10"
+script = ExtResource("6_276nr")
 
 [node name="Money" type="Button" parent="SkillsMenu/VBoxContainer/CoinsMenu/NinePatchRect/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(80, 70)
+custom_minimum_size = Vector2(70, 60)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 21
 theme_override_styles/normal = SubResource("StyleBoxTexture_ria60")
 theme_override_styles/hover = SubResource("StyleBoxTexture_fqvwy")
 text = "10"
-
-[node name="Damage" type="Button" parent="SkillsMenu/VBoxContainer/CoinsMenu/NinePatchRect/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(80, 70)
-layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_a45jx")
-theme_override_styles/hover = SubResource("StyleBoxTexture_fnge6")
+script = ExtResource("8_04xgm")
 
 [node name="Heal" type="Button" parent="SkillsMenu/VBoxContainer/CoinsMenu/NinePatchRect/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(80, 70)
+custom_minimum_size = Vector2(70, 60)
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 0
-theme_override_styles/normal = SubResource("StyleBoxTexture_a45jx")
-theme_override_styles/hover = SubResource("StyleBoxTexture_fnge6")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxTexture_luu0w")
+theme_override_styles/hover = SubResource("StyleBoxTexture_yjjyl")
+text = "10"
+script = ExtResource("10_huati")
+
+[node name="Attack" type="Button" parent="SkillsMenu/VBoxContainer/CoinsMenu/NinePatchRect/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(70, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+theme_override_styles/normal = SubResource("StyleBoxTexture_gxplc")
+theme_override_styles/hover = SubResource("StyleBoxTexture_ve7rr")
+text = "10
+"
+script = ExtResource("9_jlb72")
 
 [connection signal="pressed" from="SkillsMenu/VBoxContainer/CoinsMenu/NinePatchRect/MarginContainer/VBoxContainer/Speed" to="SkillsMenu/VBoxContainer/CoinsMenu" method="_on_speed_pressed"]
+[connection signal="pressed" from="SkillsMenu/VBoxContainer/CoinsMenu/NinePatchRect/MarginContainer/VBoxContainer/Money" to="SkillsMenu/VBoxContainer/CoinsMenu" method="_on_money_pressed"]
+[connection signal="pressed" from="SkillsMenu/VBoxContainer/CoinsMenu/NinePatchRect/MarginContainer/VBoxContainer/Heal" to="SkillsMenu/VBoxContainer/CoinsMenu" method="_on_heal_pressed"]
+[connection signal="pressed" from="SkillsMenu/VBoxContainer/CoinsMenu/NinePatchRect/MarginContainer/VBoxContainer/Attack" to="SkillsMenu/VBoxContainer/CoinsMenu" method="_on_attack_pressed"]

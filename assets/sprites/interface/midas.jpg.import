@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b58k6r3t6b4de"
-path="res://.godot/imported/midas.jpg-2b44724c0e0f918ae84e400c6bccaea6.ctex"
+uid="uid://ca2hnj1jy3hkf"
+path="res://.godot/imported/midas.jpg-ed832270ac61463c340aabb5deeb022c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/interface/midas.jpg"
-dest_files=["res://.godot/imported/midas.jpg-2b44724c0e0f918ae84e400c6bccaea6.ctex"]
+source_file="res://assets/sprites/Interface/midas.jpg"
+dest_files=["res://.godot/imported/midas.jpg-ed832270ac61463c340aabb5deeb022c.ctex"]
 
 [params]
 

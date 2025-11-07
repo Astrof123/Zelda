@@ -1,0 +1,10 @@
+extends Camera2D
+
+@export var tilemap: TileMap
+
+func _ready():
+	var mapReact = tilemap.get_used_rect()
+	var tileSize = tilemap.cell_quadrant_size
+	var worldSizeInPixels = mapReact.size * tileSize
+	limit_right = worldSizeInPixels.x
+	limit_bottom = worldSizeInPixels.y

@@ -1,0 +1,114 @@
+[gd_scene load_steps=12 format=3 uid="uid://btqt6ypvnai0l"]
+
+[ext_resource type="Script" uid="uid://cfskibwjuvjw0" path="res://scripts/barrel.gd" id="1_ptqd7"]
+[ext_resource type="Texture2D" uid="uid://cbor40q5yvlv4" path="res://assets/sprites/Decorations/Destructible Objects Sprite Sheet.png" id="1_q36op"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ptqd7"]
+atlas = ExtResource("1_q36op")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n8wf6"]
+atlas = ExtResource("1_q36op")
+region = Rect2(256, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mhtw8"]
+atlas = ExtResource("1_q36op")
+region = Rect2(320, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdyii"]
+atlas = ExtResource("1_q36op")
+region = Rect2(384, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qowtj"]
+atlas = ExtResource("1_q36op")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p63pu"]
+animations = [{
+"frames": [{
+"duration": 0.8,
+"texture": SubResource("AtlasTexture_ptqd7")
+}, {
+"duration": 0.8,
+"texture": SubResource("AtlasTexture_n8wf6")
+}, {
+"duration": 0.8,
+"texture": SubResource("AtlasTexture_mhtw8")
+}, {
+"duration": 0.8,
+"texture": SubResource("AtlasTexture_gdyii")
+}],
+"loop": false,
+"name": &"boom",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qowtj")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_ptqd7"]
+resource_name = "disappear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_n8wf6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mhtw8"]
+_data = {
+&"RESET": SubResource("Animation_n8wf6"),
+&"disappear": SubResource("Animation_ptqd7")
+}
+
+[node name="Barrel" type="Node2D"]
+z_index = 1
+y_sort_enabled = true
+scale = Vector2(2, 2)
+script = ExtResource("1_ptqd7")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PackedVector2Array(-6.5, -4.5, -2.5, 1, 6, 1, 10, -4.5)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_p63pu")
+animation = &"idle"
+offset = Vector2(0, -14)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_mhtw8")
+}

@@ -5,7 +5,7 @@ extends VBoxContainer
 var coins: String = str(0)
 
 func _process(delta: float) -> void:
-	coins = str(global.coins)
+	coins = str(int(global.coins))
 	update_text()
 
 
